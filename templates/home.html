@@ -1,0 +1,60 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="d-flex flex-wrap px-5 pt-3 align-items-center">
+  <div class="col-md-6">
+    <h1>Welcome to Car Mart</h1>
+    <p>
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus
+      dolorum delectus necessitatibus temporibus adipisci, harum enim unde,
+      suscipit in ipsum provident hic minima molestias reiciendis nihil veniam
+      aut doloribus, ab quidem sit cum at nemo nulla autem! Dolor quaerat ea
+      voluptatem ullam, consequuntur quisquam ut iste. Vitae exercitationem
+      ipsum blanditiis. Nihil rem in quo magni quam sapiente ad ipsa voluptatum
+      saepe quos temporibus, at iste? Eum saepe eos error ea recusandae.
+    </p>
+  </div>
+  <div class="col-md-6">
+    <img class="rounded" style="width:100%; margin:auto"  src="{% static 'header.jpg' %}" />
+  </div>
+</div>
+
+<div class="p-4 mt-5">
+  <div class=" bg-white p-3">
+    <h5>All Brands</h5>
+    <div class="d-flex justify-content-start  gap-2 flex-wrap align-items-center">
+        {% for brand in brands %}
+            <a href="{% url 'brand_wise_post' brand.slug %}" class="btn btn-success text-decoration-none text-dark">{{brand.name}}</a>
+        {% endfor %}
+    </div>
+  </div>
+  <div class=" p-3">
+    <h4>{{data | length}} results found</h4>
+    <div class="row d-flex flex-wrap pt-5">
+      {% for car in data %}
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <div class="card m-2">
+          <div class="card-body">
+            <img src="{{car.image.url}}" class="card-img-top" alt="..." />
+            <h5 class="card-title">
+               <a
+                href="{% url 'detail_car' car.id %}"
+                class="text-decoration-none text-dark"
+                >{{car.name}}</a
+              > 
+            </h5>
+            <p class="card-text">{{car.description |truncatewords:10}}</p>
+            <p class="fw-semibold">Model : {{car.name}}</p>
+            <p class="fw-semibold">Price : ${{car.price}}</p>
+            <p class="fw-semibold">
+                Brand : <button class="btn btn-primary btn-sm m-2" disabled>
+                {{car.brand}}
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

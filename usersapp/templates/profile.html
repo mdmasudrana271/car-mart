@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{%load crispy_forms_tags%}
+{%block content%}
+    <div class="row gap-3 d-flex justify-content-center mt-5 p-5">
+        <div class="col-md-4 col-12 shadow border p-3 mb-5 bg-body-gray rounded">
+            <h1>My Profiles</h1>
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{user.first_name}} {{user.last_name}}</h5>
+                  <p class="card-text">Passionate about technology, teaching, and empowering others through innovation Skilled in MERN Stack, Python Django, and competitive programming. Dedicated to continuous learning, with a focus on creating impactful solutions.Aspiring to inspire and guide the next generation of tech enthusiasts.Always ready to collaborate on exciting projects and share knowledge.</p>
+                  <p class="card-text">Username: {{user.username}}</p>
+                </div>
+                <div class="card-body">
+                    <a href="{%url 'edit_profile'%}">Edit Your Profile</a>
+                </div>
+              </div>
+            
+        </div>
+
+        <div class="col-md-7 col-12 shadow border  mb-5 bg-body-gray rounded">
+            <h1 class="text-center mt-2">My Orders</h1>
+            <h3 class="fw-bold ">Total Price: ${{total}}</h3>
+            {%if data|length == 0%}
+                <h1 class=" text-center text-danger">You have No Orders</h1>
+            {%else%}
+                <div class="d-flex flex-wrap justify-content-start  gap-3 ">
+                    {%for car in data%}
+                        
+                        <div class="card col-sm-3" style="width: 18rem;">
+                            <div class="card-body">
+                            <h5 class="card-title">{{car.car.name}}</h5>
+                            <p class="card-text">{{car.car.description |truncatewords:15}}</p>
+                            <p><span class="fw-bolder">price: </span>${{car.car.price}}</p>
+                            <p>Brand:  <button type="button" class="btn btn-sm btn-warning m-2" disabled>{{car.car.brand}}</button></p>
+                            </div>
+                        </div>
+                    {%endfor%}
+                </div>
+            {%endif%}
+        </div>
+    </div>
+{%endblock%}
